@@ -1,4 +1,4 @@
-import utils
+import trivia
 
 def main():
     cmds = [
@@ -7,7 +7,7 @@ def main():
         "make -C build/",
     ]
     for cmd in cmds:
-        r = utils.run(cmd)
+        r = trivia.run(cmd)
         if r != 0:
             print "[error]cmd:" + cmd
             return
