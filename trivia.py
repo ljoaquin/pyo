@@ -1,5 +1,6 @@
 import os
 import shutil
+import subprocess
 
 def abspath(path):
     return os.path.abspath(path)
@@ -51,6 +52,12 @@ def files_filter(rootdir, func):
 def run(cmd):
     print cmd
     return os.system(cmd)
+
+def popen(cmd):
+    print cmd
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    out_msg, err_msg = p.communicate()
+    return p.returncode, out_msg, err_msg
 
 def print_with_frame(title):
     middle = "|" + title + "|"
@@ -106,6 +113,17 @@ def main():
         return path[-4:] == ".jar"
     filepaths = files_filter(path, foo)
     print filepaths
+
+    print_with_frame("test popen")
+    r, out, err = popen("ls -al")
+    print "r:\n" + str(r)
+    print "out:\n" + out
+    print "err:\n" + err
+    
+    r, out, err = popen("ls -z")
+    print "r:\n" + str(r)
+    print "out:\n" + out
+    print "err:\n" + err
 
 if __name__ == '__main__':
     main()
