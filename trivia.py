@@ -59,6 +59,18 @@ def popen(cmd):
     out_msg, err_msg = p.communicate()
     return p.returncode, out_msg, err_msg
 
+def extract(full_string, pattern_front, pattern_end):
+    index0 = full_string.find(pattern_front)
+    if index0 == -1:
+        return
+    index1 = index0 + len(pattern_front)
+    result = full_string[index1:]
+    index2 = result.find(pattern_end)
+    if index2 == -1:
+        return
+    return result[:index2]
+
+
 def print_with_frame(title):
     middle = "|" + title + "|"
     side = "-" * len(middle)
