@@ -1,6 +1,7 @@
 import os
 import shutil
 import subprocess
+import hashlib
 
 def abspath(path):
     return os.path.abspath(path)
@@ -70,72 +71,7 @@ def extract(full_string, pattern_front, pattern_end):
         return
     return result[:index2]
 
-
-def print_with_frame(title):
-    middle = "|" + title + "|"
-    side = "-" * len(middle)
-    print side
-    print middle
-    print side
-
-def main():
-
-    print_with_frame("test")
-
-    path = "./tmp"
-    print abspath(path)
-
-    print "exists:" + str(exists(path))
-    print "isdir:" + str(isdir(path))
-    print "isfile:" + str(isfile(path))
-
-    print_with_frame("mkdir:" + path)
-    mkdir(path)
-
-    print "exists:" + str(exists(path))
-    print "isdir:" + str(isdir(path))
-    print "isfile:" + str(isfile(path))
-
-    print_with_frame("mkdir and remove:" + path)
-    mkdir(path)
-    remove(path)
-
-    print "exists:" + str(exists(path))
-    print "isdir:" + str(isdir(path))
-    print "isfile:" + str(isfile(path))
-
-    print_with_frame("create file:" + path)
-    run("touch " + path)
-
-    print "exists:" + str(exists(path))
-    print "isdir:" + str(isdir(path))
-    print "isfile:" + str(isfile(path))
-
-    print_with_frame("remove:" + path)
-    remove(path)
-
-    print "exists:" + str(exists(path))
-    print "isdir:" + str(isdir(path))
-    print "isfile:" + str(isfile(path))
-
-    print_with_frame("test files_filter")
-    path = "/Users/xxx/Documents/tmp"
-
-    def foo(path):
-        return path[-4:] == ".jar"
-    filepaths = files_filter(path, foo)
-    print filepaths
-
-    print_with_frame("test popen")
-    r, out, err = popen("ls -al")
-    print "r:\n" + str(r)
-    print "out:\n" + out
-    print "err:\n" + err
-    
-    r, out, err = popen("ls -z")
-    print "r:\n" + str(r)
-    print "out:\n" + out
-    print "err:\n" + err
-
-if __name__ == '__main__':
-    main()
+def md5(content):
+    m = hashlib.md5()
+    m.update(content)
+    return m.hexdigest()
