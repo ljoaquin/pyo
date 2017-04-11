@@ -53,7 +53,8 @@ def main():
 
     def foo(path):
         return path[-4:] == ".jar"
-    filepaths = trivia.files_filter(path, foo)
+    # filepaths = trivia.files_filter(path, foo)
+    filepaths = trivia.files_filter(path, lambda path: path[-4:] == ".jar")
     print filepaths
 
     print_with_frame("test trivia.popen")
