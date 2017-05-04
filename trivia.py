@@ -6,6 +6,9 @@ import hashlib
 def abspath(path):
     return os.path.abspath(path)
 
+def dirpath(path):
+    return os.path.dirname(path)
+
 def exists(path):
     path = abspath(path)
     return os.path.exists(path)
@@ -25,6 +28,13 @@ def mkdir(path):
         return
     os.mkdir(path)
 
+def mkdirs(path):
+    path = abspath(path)
+    if exists(path):
+        print "[error]already exists:" + path
+        return
+    os.makedirs(path)
+
 def remove(path):
     path = abspath(path)
     if exists(path):
@@ -36,6 +46,17 @@ def remove(path):
             print "[error]not file or dir"
     else:
         print "[error]no such:" + path
+
+def move(src, dst):
+    if not exists(dst):
+        mkdirs(dst)
+    shutil.move(src, dst)
+
+def copy(src, dst):
+    dir_path = dirpath(dst)
+    if not exists(dir_path):
+        mkdirs(dir_path)
+    shutil.copy2(src, dst)
 
 def files_filter(rootdir, func):
     if not exists(rootdir) or not isdir(rootdir):

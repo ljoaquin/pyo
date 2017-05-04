@@ -76,5 +76,26 @@ def main():
     result = trivia.md5(content)
     print "string:%s, md5:%s" % (content, result)
 
+    print_with_frame("test trivia.dirpath")
+    print trivia.dirpath("./a/b/c/d")
+
+    print_with_frame("test trivia.mkdirs")
+    trivia.mkdirs("./a/b/c/d")
+    if trivia.exists("./a/b/c/d") and trivia.isdir("./a/b/c/d"):
+        print "trivia.mkdirs ok"
+    trivia.remove("./a/")
+
+
+    print_with_frame("test trivia.copy/move")
+    trivia.run("touch c")
+    trivia.copy("c", "trivia_copy/a/b/")
+    trivia.move("c", "trivia_move/a/b")
+    if trivia.exists("trivia_copy/a/b/c") and trivia.isfile("trivia_copy/a/b/c"):
+        print "trivia.copy ok"
+    if trivia.exists("trivia_move/a/b/c") and trivia.isfile("trivia_move/a/b/c"):
+        print "trivia.move ok"
+    trivia.remove("trivia_copy")
+    trivia.remove("trivia_move")
+
 if __name__ == '__main__':
     main()
