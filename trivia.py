@@ -16,7 +16,7 @@ def popen(cmd):
 def abspath(path):
     return os.path.abspath(path)
 
-def dirpath(path):
+def dirname(path):
     return os.path.dirname(path)
 
 def exists(path):
@@ -62,7 +62,7 @@ def copy(src, dst):
     if not exists(src) or not isfile(src):
         print "[error]no such file:" + src
         return
-    dir_path = dirpath(dst)
+    dir_path = dirname(dst)
     if not exists(dir_path):
         mkdirs(dir_path)
     shutil.copy2(src, dst)
@@ -75,6 +75,16 @@ def move(src, dst):
     if not exists(dst):
         mkdirs(dst)
     shutil.move(src, dst)
+
+def path_fix(path):
+    return path.replace("\\", "/")
+
+def path_join(dirpath, filename):
+    return os.path.join(dirpath, filename)
+
+def path_split(path):
+    path = path_fix(path)
+    return (dirname(path), path[path.rfind("/") + 1:])
 
 def files_filter(rootdir, func):
     if not exists(rootdir) or not isdir(rootdir):
